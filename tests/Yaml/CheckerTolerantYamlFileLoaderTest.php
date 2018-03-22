@@ -107,4 +107,15 @@ final class CheckerTolerantYamlFileLoaderTest extends TestCase
 
         $this->assertSame($methodCall, $methodCalls[0]);
     }
+
+    public function testImports(): void
+    {
+        $container = (new ContainerFactory())->createWithConfig(
+            __DIR__ . '/CheckerTolerantYamlFileLoaderSource/config-with-imports.yml'
+        );
+
+        /** @var FixerFileProcessor $fixerFileProcessor */
+        $fixerFileProcessor = $container->get(FixerFileProcessor::class);
+        $this->assertCount(1, $fixerFileProcessor->getCheckers());
+    }
 }
